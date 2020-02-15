@@ -80,7 +80,7 @@ impl GlContainer {
                 .set_attribute("width", "640")
                 .expect("Cannot set width");
             canvas
-                .set_attribute("height", "480")
+                .set_attribute("height", "720")
                 .expect("Cannot set height");
             let context_options = js_sys::Object::new();
             js_sys::Reflect::set(

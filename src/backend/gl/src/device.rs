@@ -1156,6 +1156,7 @@ impl d::Device<B> for Device {
             let ptr: *mut u8 = if let Some(ptr) = memory.emulate_map_allocation.get() {
                 ptr
             } else {
+                //web_sys::console::log_1(&format!("gfx mem map: {}", memory.size).to_string().into());
                 let ptr =
                     Box::into_raw(vec![0; memory.size as usize].into_boxed_slice()) as *mut u8;
                 memory.emulate_map_allocation.set(Some(ptr));
@@ -1254,6 +1255,7 @@ impl d::Device<B> for Device {
             if self.share.private_caps.emulate_map {
                 let ptr = mem.emulate_map_allocation.get().unwrap();
                 let slice = slice::from_raw_parts_mut(ptr.offset(offset as isize), size as usize);
+
                 gl.get_buffer_sub_data(target, offset as i32, slice);
             } else {
                 gl.invalidate_buffer_sub_data(target, offset as i32, size as i32);
@@ -1942,8 +1944,8 @@ impl d::Device<B> for Device {
             extent: config.extent,
             context: {
                 surface.context().resize(glutin::dpi::PhysicalSize::new(
-                    config.extent.width as f64,
-                    config.extent.height as f64,
+                    config.extent.width,
+                    config.extent.height,
                 ));
                 surface.context.clone()
             },

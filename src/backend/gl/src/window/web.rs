@@ -49,7 +49,7 @@ impl Surface {
                 .expect("Cannot get document")
                 .query_selector(&format!("canvas[data-raw-handle=\"{}\"]", handle.id))
                 .expect("Cannot query for canvas")
-                .expect("Canvas is not found")
+                .expect(format!("Canvas is not found: {}", handle.id).as_ref())
                 .dyn_into()
                 .expect("Failed to downcast to canvas type");
             Self::from_canvas(canvas)

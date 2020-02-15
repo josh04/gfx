@@ -492,7 +492,7 @@ pub(crate) fn query_all(gl: &GlContainer) -> (Info, Features, LegacyFeatures, Li
         features |= Features::INDEPENDENT_BLENDING;
     }
 
-    let emulate_map = info.version.is_embedded;
+    let emulate_map = info.version.is_embedded || !info.is_supported(&[crate::info::Requirement::Core(4, 3)]);
 
     let private = PrivateCaps {
         vertex_array: info.is_supported(&[Core(3, 0), Es(3, 0), Ext("GL_ARB_vertex_array_object")]),
